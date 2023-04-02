@@ -16,7 +16,7 @@ build:
 	@swift build \
 		-c release \
 		--disable-sandbox \
-		--build-path "$(BUILDDIR)" \
+		--scratch-path "$(BUILDDIR)" \
 		-Xswiftc \
 		-emit-module-interface \
 		-Xswiftc \
