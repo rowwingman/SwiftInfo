@@ -32,7 +32,7 @@ public struct CodeCoverageProvider: InfoProvider {
         self.percentageInt = percentageInt
     }
 
-    public static func extract(fromApi api: SwiftInfo, args: Args?) throws -> CodeCoverageProvider {
+    public static func extract(fromApi api: SwiftInfoProvider, args: Args?) throws -> CodeCoverageProvider {
         if args == nil {
             log("No targets provided, getting code coverage of the main .apps", verbose: true)
         }
@@ -71,7 +71,7 @@ public struct CodeCoverageProvider: InfoProvider {
         return CodeCoverageProvider(percentageInt: rounded)
     }
 
-    public static func getCodeCoverageJson(api: SwiftInfo) throws -> [String: Any] {
+    public static func getCodeCoverageJson(api: SwiftInfoProvider) throws -> [String: Any] {
         let testLog = try api.fileUtils.testLog()
         if let xcode11CovPath = getCodeCoverageXcode11JsonPath(fromLogs: testLog) {
             let command = "xcrun xccov view --report \(xcode11CovPath) --json > \(tempFileName)"

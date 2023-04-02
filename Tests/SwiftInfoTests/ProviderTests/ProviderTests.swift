@@ -1,8 +1,8 @@
 import XCTest
 @testable import SwiftInfoCore
 
-extension SwiftInfo {
-    static func mock() -> SwiftInfo {
+extension SwiftInfoProvider {
+    static func mock() -> SwiftInfoProvider {
         let fileManager = MockFileManager()
         let fileOpener = MockFileOpener(mockFM: fileManager)
         let fileUtils = FileUtils(fileManager: fileManager, fileOpener: fileOpener)
@@ -15,7 +15,7 @@ extension SwiftInfo {
         let plist = NSDictionary(dictionary: ["CFBundleShortVersionString": "1.0",
                                               "CFBundleVersion": "1"])
         fileManager.add(plist: plist, file: "./Info.plist")
-        return SwiftInfo(projectInfo: projectInfo,
+        return SwiftInfoProvider(projectInfo: projectInfo,
                          fileUtils: fileUtils,
                          slackFormatter: .init(),
                          client: .init(),
@@ -29,11 +29,11 @@ extension SwiftInfo {
 
 final class ProviderTests: XCTestCase {
 
-    var api: SwiftInfo!
+    var api: SwiftInfoProvider!
 
     override func setUp() {
         super.setUp()
-        api = SwiftInfo.mock()
+        api = SwiftInfoProvider.mock()
         FileUtils.buildLogFilePath = ""
         FileUtils.testLogFilePath = ""
     }

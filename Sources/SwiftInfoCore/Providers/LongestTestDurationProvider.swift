@@ -21,7 +21,7 @@ public struct LongestTestDurationProvider: InfoProvider {
         self.durationInt = durationInt
     }
 
-    public static func extract(fromApi api: SwiftInfo, args _: Args?) throws -> LongestTestDurationProvider {
+    public static func extract(fromApi api: SwiftInfoProvider, args _: Args?) throws -> LongestTestDurationProvider {
         let tests = try allTests(api: api)
         guard let longest = tests.max(by: { $0.1 < $1.1 }) else {
             throw error("Couldn't determine the longest test because no tests were found!")
@@ -30,7 +30,7 @@ public struct LongestTestDurationProvider: InfoProvider {
                                            durationInt: Int(longest.1 * 1000))
     }
 
-    public static func allTests(api: SwiftInfo) throws -> [(String, Float)] {
+    public static func allTests(api: SwiftInfoProvider) throws -> [(String, Float)] {
         let testLog = try api.fileUtils.testLog()
         let data = testLog.match(regex: #"Test.* seconds\)"#)
         return try data

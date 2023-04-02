@@ -15,13 +15,13 @@ public struct TotalAssetCatalogsSizeProvider: InfoProvider {
         self.size = size
     }
 
-    public static func extract(fromApi api: SwiftInfo, args _: Args?) throws -> TotalAssetCatalogsSizeProvider {
+    public static func extract(fromApi api: SwiftInfoProvider, args _: Args?) throws -> TotalAssetCatalogsSizeProvider {
         let catalogs = try allCatalogs(api: api)
         let total = catalogs.map { $0.size }.reduce(0, +)
         return TotalAssetCatalogsSizeProvider(size: total)
     }
 
-    static func allCatalogsPaths(api: SwiftInfo) throws -> [String] {
+    static func allCatalogsPaths(api: SwiftInfoProvider) throws -> [String] {
         let buildLog = try api.fileUtils.buildLog()
         let compileRows = buildLog.match(regex: "CompileAssetCatalog.*")
         let catalogs: [String] = compileRows.map { (row: String) -> [String] in
@@ -33,14 +33,14 @@ public struct TotalAssetCatalogsSizeProvider: InfoProvider {
         return uniqueCatalogs
     }
 
-    static func allCatalogs(api: SwiftInfo) throws -> [AssetCatalog] {
+    static func allCatalogs(api: SwiftInfoProvider) throws -> [AssetCatalog] {
         let catalogs = try allCatalogsPaths(api: api)
         let sizes = try catalogs.map { try folderSize(ofCatalog: $0, api: api) }
         let result = zip(catalogs, sizes).map { ($0.0, $0.1) }
         return result.map { AssetCatalog(name: $0.0, size: $0.1.0, largestInnerFile: $0.1.1) }
     }
 
-    static func folderSize(ofCatalog catalog: String, api: SwiftInfo) throws -> (size: Int, largestInnerFile: File?) {
+    static func folderSize(ofCatalog catalog: String, api: SwiftInfoProvider) throws -> (size: Int, largestInnerFile: File?) {
         let fileManager = api.fileUtils.fileManager
         let enumerator: FileManager.DirectoryEnumerator?
         if fileManager.enumerator(atPath: catalog)?.nextObject() == nil {

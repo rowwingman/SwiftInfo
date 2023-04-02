@@ -17,7 +17,7 @@ public struct ArchiveDurationProvider: InfoProvider {
         self.timeInt = timeInt
     }
 
-    public static func extract(fromApi api: SwiftInfo, args _: Args?) throws -> ArchiveDurationProvider {
+    public static func extract(fromApi api: SwiftInfoProvider, args _: Args?) throws -> ArchiveDurationProvider {
         let buildLog = try api.fileUtils.buildLog()
         let durationString = buildLog.match(regex: #"(?<=\*\* ARCHIVE SUCCEEDED \*\* \[).*?(?= sec)"#).first
         guard let duration = Float(durationString ?? "") else {

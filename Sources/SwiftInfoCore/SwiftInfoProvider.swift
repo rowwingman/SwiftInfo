@@ -1,7 +1,7 @@
 import Foundation
 
 /// The base API for SwiftInfo operations.
-public struct SwiftInfo {
+public struct SwiftInfoProvider {
     /// The information about the current project.
     public let projectInfo: ProjectInfo
 

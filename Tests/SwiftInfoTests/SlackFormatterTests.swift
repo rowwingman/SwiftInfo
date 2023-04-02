@@ -3,7 +3,7 @@ import XCTest
 
 final class SlackFormatterTests: XCTestCase {
     func testFormatter() {
-        let swiftInfo = SwiftInfo.mock()
+        let swiftInfo = SwiftInfoProvider.mock()
         let summaries = [Summary(text: "A", style: .positive, numericValue: 0, stringValue: "a")]
         let output = Output(rawDictionary: [:], summaries: summaries, errors: [])
         let formatted = SlackFormatter().format(output: output, titlePrefix: nil, projectInfo: swiftInfo.projectInfo)
@@ -17,7 +17,7 @@ final class SlackFormatterTests: XCTestCase {
     }
 
     func testFormatterWithTitlePrefix() {
-        let swiftInfo = SwiftInfo.mock()
+        let swiftInfo = SwiftInfoProvider.mock()
         let prefix = "<!subteam^mention_id|ios-team>"
         let summaries = [Summary(text: "A", style: .positive, numericValue: 0, stringValue: "a")]
         let output = Output(rawDictionary: [:], summaries: summaries, errors: [])
@@ -33,7 +33,7 @@ final class SlackFormatterTests: XCTestCase {
     }
 
     func testFormatterWithError() {
-        let swiftInfo = SwiftInfo.mock()
+        let swiftInfo = SwiftInfoProvider.mock()
         let summaries = [Summary(text: "A", style: .positive, numericValue: 0, stringValue: "a")]
         let output = Output(rawDictionary: [:], summaries: summaries, errors: ["abc", "cde"])
         let formatted = SlackFormatter().format(output: output, titlePrefix: nil, projectInfo: swiftInfo.projectInfo)
@@ -47,7 +47,7 @@ final class SlackFormatterTests: XCTestCase {
     }
 
     func testRawPrint() {
-        let swiftInfo = SwiftInfo.mock()
+        let swiftInfo = SwiftInfoProvider.mock()
         let summaries = [Summary(text: "A", style: .positive, numericValue: 0, stringValue: "a")]
         let output = Output(rawDictionary: [:], summaries: summaries, errors: [])
         let formatted = SlackFormatter().format(output: output, titlePrefix: nil, projectInfo: swiftInfo.projectInfo)

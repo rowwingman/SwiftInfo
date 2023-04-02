@@ -9,7 +9,7 @@ public protocol InfoProvider: Codable {
     static var identifier: String { get }
 
     /// Executes this provider and returns an instance of it that contains the extracted info.
-    static func extract(fromApi api: SwiftInfo, args: Arguments?) throws -> Self
+    static func extract(fromApi api: SwiftInfoProvider, args: Arguments?) throws -> Self
 
     /// The descriptive name of this provider, for visual purposes.
     var description: String { get }
@@ -19,7 +19,7 @@ public protocol InfoProvider: Codable {
 }
 
 extension InfoProvider {
-    static func extract(fromApi api: SwiftInfo) throws -> Self {
+    static func extract(fromApi api: SwiftInfoProvider) throws -> Self {
         return try extract(fromApi: api, args: nil)
     }
 

@@ -25,7 +25,7 @@ public struct TestCountProvider: InfoProvider {
         self.count = count
     }
 
-    public static func extract(fromApi api: SwiftInfo, args: Args?) throws -> TestCountProvider {
+    public static func extract(fromApi api: SwiftInfoProvider, args: Args?) throws -> TestCountProvider {
         let count: Int
         if args?.buildSystem == .buck {
             count = try getCountFromBuck(api)
@@ -38,13 +38,13 @@ public struct TestCountProvider: InfoProvider {
         return TestCountProvider(count: count)
     }
 
-    static func getCountFromXcode(_ api: SwiftInfo) throws -> Int {
+    static func getCountFromXcode(_ api: SwiftInfoProvider) throws -> Int {
         let testLog = try api.fileUtils.testLog()
         return testLog.insensitiveMatch(regex: "Test Case '.*' passed").count +
             testLog.insensitiveMatch(regex: "Test Case '.*' failed").count
     }
 
-    static func getCountFromBuck(_ api: SwiftInfo) throws -> Int {
+    static func getCountFromBuck(_ api: SwiftInfoProvider) throws -> Int {
         let buckLog = try api.fileUtils.buckLog()
         let regexString = "s *([0-9]*) Passed *([0-9]*) Skipped  *([0-9]*) Failed"
         let results = buckLog.matchResults(regex: regexString)

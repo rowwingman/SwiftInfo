@@ -3,7 +3,7 @@ import XCTest
 
 final class CoreTests: XCTestCase {
     func testFullRun() {
-        let api = SwiftInfo.mock()
+        let api = SwiftInfoProvider.mock()
         let outputPath = "SwiftInfo-output/SwiftInfoOutput.json"
         XCTAssertNil(api.mockFileManager.stringContents(atPath: outputPath))
         var currentOutput = [String: Any]()
@@ -62,7 +62,7 @@ final class CoreTests: XCTestCase {
     }
 
     func testFullRunWithEmptyOutput() {
-        let api = SwiftInfo.mock()
+        let api = SwiftInfoProvider.mock()
         let outputPath = "SwiftInfo-output/SwiftInfoOutput.json"
         XCTAssertNil(api.mockFileManager.stringContents(atPath: outputPath))
         let output = api.extract(MockInfoProvider.self)
@@ -108,7 +108,7 @@ struct MockInfoProvider: InfoProvider {
     var description: String { "Fake provider for testing purposes" }
     let value: Int
 
-    static func extract(fromApi api: SwiftInfo, args: Args?) throws -> MockInfoProvider {
+    static func extract(fromApi api: SwiftInfoProvider, args: Args?) throws -> MockInfoProvider {
         return MockInfoProvider(value: 10)
     }
 

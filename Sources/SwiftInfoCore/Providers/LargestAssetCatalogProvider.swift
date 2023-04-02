@@ -17,7 +17,7 @@ public struct LargestAssetCatalogProvider: InfoProvider {
         self.size = size
     }
 
-    public static func extract(fromApi api: SwiftInfo, args _: Args?) throws -> LargestAssetCatalogProvider {
+    public static func extract(fromApi api: SwiftInfoProvider, args _: Args?) throws -> LargestAssetCatalogProvider {
         let catalogs = try TotalAssetCatalogsSizeProvider.allCatalogs(api: api)
         guard let largest = catalogs.max(by: { $0.size < $1.size }) else {
             throw error("No Asset Catalogs were found!")

@@ -27,7 +27,7 @@ public struct LinesOfCodeProvider: InfoProvider {
         self.count = count
     }
 
-    public static func extract(fromApi api: SwiftInfo, args: Args?) throws -> LinesOfCodeProvider {
+    public static func extract(fromApi api: SwiftInfoProvider, args: Args?) throws -> LinesOfCodeProvider {
         let json = try CodeCoverageProvider.getCodeCoverageJson(api: api)
         let targets = json["targets"] as? [[String: Any]] ?? []
         let count = try targets.reduce(0) {

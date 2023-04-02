@@ -15,7 +15,7 @@ public struct IPASizeProvider: InfoProvider {
         self.size = size
     }
 
-    public static func extract(fromApi api: SwiftInfo, args _: Args?) throws -> IPASizeProvider {
+    public static func extract(fromApi api: SwiftInfoProvider, args _: Args?) throws -> IPASizeProvider {
         let fileUtils = api.fileUtils
         let infofileFolder = try fileUtils.infofileFolder()
         let buildFolder = infofileFolder + "build/"

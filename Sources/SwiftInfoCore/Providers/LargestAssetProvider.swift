@@ -18,7 +18,7 @@ public struct LargestAssetProvider: InfoProvider {
         self.size = size
     }
 
-    public static func extract(fromApi api: SwiftInfo, args _: Args?) throws -> LargestAssetProvider {
+    public static func extract(fromApi api: SwiftInfoProvider, args _: Args?) throws -> LargestAssetProvider {
         let catalogs = try TotalAssetCatalogsSizeProvider.allCatalogs(api: api)
         let files = catalogs.compactMap { $0.largestInnerFile }
         guard let maxFile = files.max(by: { $0.size < $1.size }) else {
