@@ -28,7 +28,7 @@ let package = Package(
                 .product(name: "XcodeProj", package: "xcodeproj"),
             ]
         ),
-        .target(
+        .executableTarget(
             name: "SwiftInfo",
             dependencies: [
                 "SwiftInfoCore",
