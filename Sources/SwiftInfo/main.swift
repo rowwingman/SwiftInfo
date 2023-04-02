@@ -6,7 +6,7 @@ let task = Process()
 
 struct Swiftinfo: ParsableCommand {
     static var configuration = CommandConfiguration(
-        abstract: "Swiftinfo 2.5.1",
+        abstract: "Swiftinfo 2.7.0",
         subcommands: []
     )
 
@@ -41,9 +41,11 @@ struct Swiftinfo: ParsableCommand {
         log("Toolchain Path: \(toolchainPath)", verbose: true)
 
         let processInfoArgs = ProcessInfo.processInfo.arguments
-        let args = Runner.getCoreSwiftCArguments(fileUtils: fileUtils,
-                                                 toolchainPath: toolchainPath,
-                                                 processInfoArgs: processInfoArgs)
+        let args = Runner.getCoreSwiftCArguments(
+            fileUtils: fileUtils,
+            toolchainPath: toolchainPath,
+            processInfoArgs: processInfoArgs
+        )
             .joined(separator: " ")
 
         log("Swiftc Args: \(args)", verbose: true)
